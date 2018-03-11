@@ -24,7 +24,10 @@ Depending on the security level of your system, Windows may pop up a Security Al
 
 ### Start the server
 
+Before you start the server, you need to setup the environment variables for running the server locally. A sample configuration is provided in `.env.example`. You can use it by copy it to `.env` file.
+
 ```shell
+cp .env.example .env
 yarn start
 ```
 
