@@ -24,7 +24,7 @@ app.use(express.static(__dirname + "/public"));
 
 app.use(
   session({
-    secret: "conduit",
+    secret: process.env.SECRET,
     cookie: { maxAge: 60000 },
     resave: false,
     saveUninitialized: false
@@ -35,12 +35,10 @@ if (!isProduction) {
   app.use(errorhandler());
 }
 
-if (isProduction) {
+const isMongooseConnectionProvided = process.env.NODE_ENV === "integration";
+if (!isMongooseConnectionProvided) {
   mongoose.connect(process.env.MONGODB_URI);
-} else {
-  const isMongooseConnectionProvided = process.env.NODE_ENV === "integration";
-  if (!isMongooseConnectionProvided) {
-    mongoose.connect("mongodb://localhost/conduit");
+  if (!isProduction) {
     mongoose.set("debug", true);
   }
 }
